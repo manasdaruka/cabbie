@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HealthController {
 
     @GetMapping("/health")
-    public String HealthPing()
+    public String healthPing()
     {
         return "The application is running";
     }
