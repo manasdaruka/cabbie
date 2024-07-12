@@ -27,9 +27,13 @@ public class DriverController {
     
     @PostMapping("signup")
     public ResponseEntity<Map<String, String>> createDriver(@Valid @RequestBody DriverCreationDto createDriverReq) {
-        
-        String driverId = driverService.creatDriver(createDriverReq.getDriver());
-        return new ResponseEntity<>(Collections.singletonMap("driverId", driverId), HttpStatus.OK);
+        try {
+            String driverId = driverService.creatDriver(createDriverReq.getDriver());
+            return new ResponseEntity<>(Collections.singletonMap("driverId", driverId), HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity<>(Collections.singletonMap("error", "Cannot save customer\n"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }

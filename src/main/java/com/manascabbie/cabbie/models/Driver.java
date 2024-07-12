@@ -1,6 +1,7 @@
 package com.manascabbie.cabbie.models;
 
 import java.time.Instant;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 

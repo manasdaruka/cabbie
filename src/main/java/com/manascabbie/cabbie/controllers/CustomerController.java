@@ -1,11 +1,9 @@
 package com.manascabbie.cabbie.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manascabbie.cabbie.models.dtos.CustomerCreationDto;
-import com.manascabbie.cabbie.models.dtos.DriverCreationDto;
 import com.manascabbie.cabbie.services.interfaces.ICustomerService;
 
 import jakarta.validation.Valid;
@@ -29,9 +27,13 @@ public class CustomerController {
     
     @PostMapping("signup")
     public ResponseEntity<Map<String,String>> createCustomer(@Valid @RequestBody CustomerCreationDto createCustomerReq) {
-        
-        String customerId = customerService.createCustomer(createCustomerReq.getCustomer());
-        return new ResponseEntity<>(Collections.singletonMap("customerId", customerId), HttpStatus.OK);
+        try {
+            String customerId = customerService.createCustomer(createCustomerReq.getCustomer());
+            return new ResponseEntity<>(Collections.singletonMap("customerId", customerId), HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity<>(Collections.singletonMap("error", "Cannot save customer\n"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
